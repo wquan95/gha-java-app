@@ -1,0 +1,76 @@
+# Java / Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+*.log
+*.tmp
+*.bak
+
+# Maven wrapper (uncomment if you don't want to commit the wrapper)
+# .mvn/
+# mvnw
+# mvnw.cmd
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+# .terraform.lock.hcl should be committed (for reproducible provider versions)
+# Do not add it here.
+
+# Local Terraform variables (sensitive)
+*.auto.tfvars
+*.auto.tfvars.json
+
+# OS generated files
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDE / Editor
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+id_rsa*
+*.p12
+*.pfx
+
+# Logs and temporary files
+logs/
+*.log
+tmp/
+temp/
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Project-specific (SonarQube related if any local reports)
+.sonar/
+.scannerwork/
+
+# AWS / Cloud credentials (never commit these)
+.aws/
+credentials
+config
