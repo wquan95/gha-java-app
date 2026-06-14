@@ -33,6 +33,7 @@ variable "aws_region" {
 variable "key_name" {
   description = "Name of the EC2 Key Pair to use for SSH access to the SonarQube instance (required)"
   type        = string
+  default = "weiquanlee95"
 }
 
 variable "sonarqube_instance_type" {
