@@ -17,7 +17,15 @@ jobs:
         distribution: 'temurin'
     - name: Perform Static Code Analysis with SonarQube
       run: | 
-        mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gha-java-app -Dsonar.gateway.wait=true -Dsonar.gateway.timeout=300
-      env: 
+        mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gha-java-app
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    - name: Fail if Quality Gate Fails
+      uses: sonarsource/sonarqube-quality-gate-action@v1
+      timeout-minutes: 5
+      with:
+        scanMetadataReportFile: target/sonar/report-task.txt
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
