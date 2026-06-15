@@ -17,11 +17,7 @@ jobs:
         distribution: 'temurin'
     - name: Perform Static Code Analysis with SonarQube
       run: | 
-        mvn -B clean verify\
-         org.sonarsource.scanner.maven:sonar-maven-plugin:sonar\
-         -Dsonar.projectKey=gha-java-app\
-         -Dsonar.gateway.wait=true\
-         -Dsonar.gateway.timeout=300
+        mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gha-java-app -Dsonar.gateway.wait=true -Dsonar.gateway.timeout=300
       env: 
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
