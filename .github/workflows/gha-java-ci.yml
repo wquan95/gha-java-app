@@ -20,7 +20,7 @@ jobs:
         mvn -B clean verify\
          org.sonarsource.scanner.maven:sonar-maven-plugin:sonar\
          -Dsonar.projectKey=gha-java-app\
-         -Dsonar.gateway.wait=true
+         -Dsonar.gateway.wait=true\
          -Dsonar.gateway.timeout=300
       env: 
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
