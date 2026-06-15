@@ -22,7 +22,7 @@ public class Calculator {
 
 	public void sayHello(){
 		String name = null;
-		name.toString();
+		name.toString();sss
 	}
 	
 }
