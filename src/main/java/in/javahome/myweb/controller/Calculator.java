@@ -20,9 +20,9 @@ public class Calculator {
 		return i%j;
 	}
 
-	// public void sayHello(){
-	// 	String name = null;
-	// 	name.toString();
-	// }
+	public void sayHello(){
+		String name = null;
+		name.toString();
+	}
 	
 }
