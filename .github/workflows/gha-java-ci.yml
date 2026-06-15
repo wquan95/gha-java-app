@@ -2,6 +2,11 @@ name: CI Java APP using sonar, trivy and docker
 on:
   push:
     branches: [ main ]
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+env:
+  AWS_REGION: us-east-1
 jobs:
   build: 
     runs-on: ubuntu-latest
@@ -30,3 +35,26 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+    - name: Configure AWS credentials via OIDC
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: arn:aws:iam::927749346049:role/github-actions-dev-role
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Create Short SHA
+      run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
+
+    - name: Build and push Docker image to ECR
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          ${{ steps.login-ecr.outputs.registry }}927749346049.dkr.ecr.us-east-1.amazonaws.com/gha-java-app:${{ env.GITHUB_SHA }}
+    
