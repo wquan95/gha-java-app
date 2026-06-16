@@ -56,5 +56,5 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          ${{ steps.login-ecr.outputs.registry }}927749346049.dkr.ecr.us-east-1.amazonaws.com/gha-java-app:${{ env.GITHUB_SHA }}
+          ${{ steps.login-ecr.outputs.registry }}927749346049.dkr.ecr.us-east-1.amazonaws.com/gha-java-app:${{ env.SHORT_SHA }}
     
