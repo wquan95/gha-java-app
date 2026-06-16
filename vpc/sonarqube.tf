@@ -57,7 +57,7 @@ resource "aws_security_group" "sonarqube" {
 resource "aws_instance" "sonarqube" {
   ami                    = data.aws_ami.amazon_linux_2023.id
   instance_type          = var.sonarqube_instance_type
-  subnet_id              = aws_subnet.public[0].id
+  subnet_id              = values(aws_subnet.public)[0].id # Place in the first public subnet for internet access
   vpc_security_group_ids = [aws_security_group.sonarqube.id]
 
   associate_public_ip_address = true
