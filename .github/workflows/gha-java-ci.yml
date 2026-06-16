@@ -47,13 +47,13 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v2
 
     - name: Create Short SHA
-      run: echo "SHORT_SHA=$(git rev-phase --short HEAD)" >> $GITHUB_ENV
+      run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Build and push Docker image to ECR
       uses: docker/build-push-action@v6
       with:
         context: .
-        file: ./Dockerfile
+        file: ./Dockerfile 
         push: true
         tags: |
           ${{ steps.login-ecr.outputs.registry }}/gha-java-app:${{env.SHORT_SHA}}
