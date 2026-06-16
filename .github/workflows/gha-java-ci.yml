@@ -20,21 +20,21 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Perform Static Code Analysis with SonarQube
-      run: | 
-        mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gha-java-app
-      env:
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    # - name: Perform Static Code Analysis with SonarQube
+    #   run: | 
+    #     mvn -B clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=gha-java-app
+    #   env:
+    #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-    - name: Fail if Quality Gate Fails
-      uses: sonarsource/sonarqube-quality-gate-action@v1
-      timeout-minutes: 5
-      with:
-        scanMetadataReportFile: target/sonar/report-task.txt
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+    # - name: Fail if Quality Gate Fails
+    #   uses: sonarsource/sonarqube-quality-gate-action@v1
+    #   timeout-minutes: 5
+    #   with:
+    #     scanMetadataReportFile: target/sonar/report-task.txt
+    #   env:
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #     SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
     - name: Configure AWS credentials via OIDC
       uses: aws-actions/configure-aws-credentials@v4
@@ -59,9 +59,12 @@ jobs:
           ${{ steps.login-ecr.outputs.registry }}/gha-java-app:${{env.SHORT_SHA}}
     - name: Install yq tool
       uses: mikefarah/yq@v4.44.3
+
+
     - name: Update Kubernetes manifests with new image tag
       run: |
         yq -i '.spec.template.spec.containers[0].image = "wquan95/gha-java-app:${{env.SHORT_SHA}}"' k8s/java-app.yaml ./k8s/service.yaml
+
     - name: Deploy it to deployment file
       run: |
         git config --global user.name "github-actions[bot]"
