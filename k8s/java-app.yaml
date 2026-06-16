@@ -19,7 +19,7 @@ spec:
         team: retail
       containers:
         - name: gha-java-app
-          image: 927749346049.dkr.ecr.us-east-1.amazonaws.com/gha-java-app:latest
+          image: wquan95/gha-java-app:f7c70eb
           ports:
             - containerPort: 8080
           resources:
@@ -41,3 +41,23 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gha-java-app
+  labels:
+    app: gha-java-app
+spec:
+  type: LoadBalancer
+  selector:
+    app: gha-java-app
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  template:
+    spec:
+      containers:
+        - image: wquan95/gha-java-app:f7c70eb
