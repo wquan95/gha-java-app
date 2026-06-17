@@ -63,7 +63,7 @@ jobs:
 
     - name: Update Kubernetes manifests with new image tag
       run: |
-        yq -i '.spec.template.spec.containers[0].image = "wquan95/gha-java-app:${{env.SHORT_SHA}}"' k8s/java-app.yaml ./k8s/service.yaml
+        yq -i '.spec.template.spec.containers[0].image = "${{ steps.login-ecr.outputs.registry }}/wquan95/gha-java-app:${{env.SHORT_SHA}}"' k8s/java-app.yaml ./k8s/service.yaml
 
     - name: Deploy it to deployment file
       run: |
